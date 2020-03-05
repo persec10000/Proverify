@@ -8,7 +8,7 @@ import {
     ImageBackground
 } from 'react-native';
 import GradientButton from '../../components/GradientButton';
-import CustomTextInput from './CustomTextInput';
+import CustomTextInput from '../../components/CustomTextInput';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default class ForgotScreen extends Component {

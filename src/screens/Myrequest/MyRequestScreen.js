@@ -9,7 +9,7 @@ import {
     FlatList,
 } from 'react-native'
 import GradientHeader from '../../components/GradientHeader'
-import CustomTextInput from '../Auth/CustomTextInput'
+import CustomTextInput from '../../components/CustomTextInput'
 import DropDown from '../../components/Dropdown'
 import ActionSheet from '../../components/ActionSheet'
 import LinearGradient from 'react-native-linear-gradient'

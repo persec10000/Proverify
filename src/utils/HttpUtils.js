@@ -10,7 +10,12 @@ class HttpUtils {
   getMenuItem(){
     return BASE_URL + "Application/GetMenu";
   }
-
+  getProvider() {
+    return BASE_URL + "Application/GetProvider"
+  }
+  submitData(){
+    return BASE_URL + "Application/KycRequest"
+  }
 
   // Headers ======================
   getHeaders() {

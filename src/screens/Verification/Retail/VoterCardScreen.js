@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import GradientHeader from '../../../components/GradientHeader';
-import CustomTextInput from '../../Auth/CustomTextInput';
+import CustomTextInput from '../../../components/CustomTextInput';
 import GradientButton from '../../../components/GradientButton';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import SafeAreaView from 'react-native-safe-area-view'

@@ -10,13 +10,15 @@ import {
     AlertIOS,
     ToastAndroid,
     ActivityIndicator
-} from 'react-native'
-import LinearGradient from 'react-native-linear-gradient'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import CustomTextInput from './CustomTextInput'
-import _ from 'lodash'
-import GradientButton from '../../components/GradientButton'
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import CustomTextInput from '../../components/CustomTextInput';
+import _ from 'lodash';
+import GradientButton from '../../components/GradientButton';
+import CustomPassInput from '../../components/CustomPassInput';
 import { usersService } from '../../services/UsersService';
+import CheckBox from 'react-native-check-box';
 import AsyncStorage from '@react-native-community/async-storage'
 
 let self = null;
@@ -26,7 +28,9 @@ class LoginScreen extends Component {
         this.state={
             id: '',
             password: '',
-            isLoggingIn: false
+            isLoggingIn: false,
+            isChecked: false,
+            showpassword: true
         }
         self = this;
     }
@@ -78,8 +82,23 @@ class LoginScreen extends Component {
         this.setState({ password: text })
     }
 
-    render() {
-        const {id, password, isLoggingIn} = this.state;
+    changePwdType = () => {
+        this.setState( state => ({showpassword: !state.showpassword}));
+    }
+
+    async componentDidMount(){
+        let remembername = await AsyncStorage.getItem('username');
+        let rememberpass = await AsyncStorage.getItem('password');
+        if (typeof(remembername) !== undefined && typeof(rememberpass) !== undefined){
+            this.setState({
+                id: remembername,
+                password: rememberpass
+            })
+        }
+    }
+    render(){
+        const {id, password, isLoggingIn, isChecked} = this.state;
+        
         return (
             <KeyboardAwareScrollView 
                 style={styles.container}>
@@ -96,15 +115,36 @@ class LoginScreen extends Component {
                         value={id}
                         onChangeText={this.onChangeId}
                     />
-                    <CustomTextInput 
-                        placeholder="Password"
-                        placeholderTextColor="#707070"
-                        secureTextEntry={true}
+                    <CustomPassInput 
                         inputWrapperStyle={{
                             marginBottom: 17
                         }}
                         value={password}
+                        placeholder="Password"
+                        placeholderTextColor="#707070"
+                        secureTextEntry={this.state.showpassword}
                         onChangeText={this.onChangePassword}
+                        iconPress={this.changePwdType}
+                    />
+                   <CheckBox
+                        style={{flex: 1, marginHorizontal: 22, marginVertical: 5}}
+                        onClick={()=>{
+                        this.setState({
+                            isChecked:!this.state.isChecked
+                        }, 
+                        ()=>{
+                            if (this.state.isChecked){
+                                AsyncStorage.setItem('username', id);
+                                AsyncStorage.setItem('password', password);
+                            }
+                            else {
+                                AsyncStorage.removeItem('username');
+                                AsyncStorage.removeItem('password');
+                            }
+                        })
+                        }}
+                        isChecked={this.state.isChecked}
+                        rightText={"Remember me"}
                     />
                     <TouchableOpacity
                         onPress={this.forgot} 
@@ -125,8 +165,7 @@ class LoginScreen extends Component {
                                 label="Login"
                                 _onPress={this.login}
                             />
-                        }                       
-                       
+                        }
                     </View>
                 </View>
             </KeyboardAwareScrollView>
@@ -162,7 +201,7 @@ const styles = StyleSheet.create({
     },
     gradientBtnWrapper: {
         alignItems: 'center',
-        marginTop: 25,
+        marginTop: 10
     },
     loginBtn: {
         width: 280,

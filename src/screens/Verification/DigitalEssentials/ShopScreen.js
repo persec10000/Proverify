@@ -8,7 +8,7 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import GradientHeader from '../../../components/GradientHeader';
-import CustomTextInput from '../../Auth/CustomTextInput';
+import CustomTextInput from '../../../components/CustomTextInput';
 import GradientButton from '../../../components/GradientButton';
 import SafeAreaView from 'react-native-safe-area-view';
 import {menuService} from '../../../services/MenuService';

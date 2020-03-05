@@ -15,6 +15,7 @@ const VerificationItem = props => {
         _onPress={()=>
           props.subVerification(MenuId, MenuName)
         }
+        buttonsize={{width:330,height:56}}
       />
   )
 }

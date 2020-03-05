@@ -9,7 +9,7 @@ import { usersService } from '../services/UsersService'
 import ModalDropdown from 'react-native-modal-dropdown';
 import { SlideAnimation } from 'react-native-popup-dialog';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 let self = null;
 const MenuItem = props => {
   const { MenuId, MenuName, Flag } = props.item
@@ -23,6 +23,7 @@ const MenuItem = props => {
           MenuName == "VERIFICATION"?
             props.verification(MenuId):null
         }
+        buttonsize={{width:310,height:56}}
       />
   )
 }
@@ -134,18 +135,29 @@ export default class DashboardScreen extends Component {
   
   render(){
     const {data, options,ClientId} = this.state;
-    
+    console.log("io==",options[0])
     return(
       <ScrollView>
         <View style={styles.container}>
-          <ModalDropdown 
-            ref="dropdown_2"
-            style={styles.dropdown_2}
-            textStyle={styles.dropdown_2_text}
-            dropdownStyle={styles.dropdown_2_dropdown}
-            options={options}
-            onSelect={(index, value) => this._dropdown(index, value)}
-          />
+          <TouchableOpacity style = {{marginVertical:80, marginHorizontal: 40, height:50, borderRadius:10, alignItems:'center',borderWidth: 1, borderColor:'red', flexDirection:'row'}} onPress={()=>this.dropdown.show()}>
+            <ModalDropdown 
+              ref={ref => {this.dropdown = ref}}
+              style={styles.dropdown_2}
+              textStyle={styles.dropdown_2_text}
+              dropdownStyle={styles.dropdown_2_dropdown}
+              dropdownTextStyle={styles.dropdown_text}
+              defaultIndex={-1}
+              defaultValue={options[0]}
+              options={options}
+              onSelect={(index, value) => this._dropdown(index, value)}
+            />
+            <MaterialIcons 
+              style={styles.icon}
+              name={'keyboard-arrow-down'}
+              size={34}
+              // onPress={this.props.iconPress}
+            />  
+          </TouchableOpacity>
           <FlatList 
             data={data}
             renderItem={this._renderItem}
@@ -192,28 +204,32 @@ const styles = StyleSheet.create({
       letterSpacing: 0
   },
   dropdown_2: {
-    alignSelf: 'center',
-    width: "70%",
-    marginTop: 100,
-    marginBottom: 50,
-    // right: 8,
-    borderWidth: 0,
-    borderRadius: 3,
-    backgroundColor: '#E8222B',
+    flex: 1
   },
   dropdown_2_text: {
     marginVertical: 10,
     marginHorizontal: 6,
     fontSize: 18,
-    color: 'white',
-    textAlign: 'center',
+    color: '#000',
+    paddingHorizontal: 15,
+    // textAlign: 'center',
     textAlignVertical: 'center',
   },
+  dropdown_text: {
+    fontSize: 16,
+    color: '#000',
+  },
   dropdown_2_dropdown: {
-    width: "70%",
+    width: '79%',
+    // marginHorizontal: 20,
     height: 300,
     borderColor: '#E8222B',
-    borderWidth: 2,
+    borderWidth: 1,
     borderRadius: 3,
-  }
+  },
+  icon: {
+    position: 'absolute',
+    top: 8,
+    right: 6
+},
 })

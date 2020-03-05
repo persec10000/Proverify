@@ -4,12 +4,12 @@ import LinearGradient from 'react-native-linear-gradient';
 
 export default class GradientButton extends Component {
   render() {
-    const {label, _onPress} = this.props;
+    const {label, _onPress, buttonsize} = this.props;
     return (
       <View style={styles.gradientBtnWrapper}>
         <TouchableOpacity onPress={_onPress} style={styles.gradientBtn}>
           <LinearGradient
-            style={styles.gradientBtnBackground}
+            style={[styles.gradientBtnBackground, buttonsize]}
             colors={['#E8222B', '#141414']}>
             <Text style={styles.gradientBtnLabel}>{label}</Text>
           </LinearGradient>
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     elevation: 12,
   },
   gradientBtnBackground: {
-    width: 310,
+    width: 280,
     height: 56,
     borderRadius: 30,
     justifyContent: 'center',
